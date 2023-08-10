@@ -1,1 +1,1 @@
-from .ws_connection_handler import WSConnectionHandler
+from .ws_conn_handler import WSConnectionHandler
