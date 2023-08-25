@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "aiohttp-wsconnhandler"
-version = "0.1.2"
+version = "0.2.0"
 authors = [
   { name="darkhaniop", email="darkhaniop@google.com" },
 ]
