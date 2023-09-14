@@ -18,7 +18,7 @@ class WSConnectionHandler:
     ```
     async def my_handler():
         ...
-        my_ws_conn = WSSocketHandler(ws_response)
+        my_ws_conn = WSConnectionHandler(ws_response)
         await my_ws_conn.run_loop()
         ...
     ```
@@ -28,7 +28,7 @@ class WSConnectionHandler:
     async def connect_and_loop():
         ...
         async with session.ws_connect(url, **connection_kwargs) as ws:
-            my_ws_conn = WSSocketHandler(ws)
+            my_ws_conn = WSConnectionHandler(ws)
             await my_ws_conn.run_loop()
         ...
     ```
@@ -115,10 +115,11 @@ class WSConnectionHandler:
         self._sender_task = asyncio.create_task(self._run_sender())
         self._stop_watcher_task = asyncio.create_task(self._stop_request_watcher())
         try:
-            # According to aiohttp documentation, receiving messages must be
-            # performed in the request handler task. Therefore, instead of
-            # calling asyncio.create_task(), the reader is awaited in the
-            # current task. The reader exits when the connection is closed.
+            # According to the aiohttp documentation, message receiving
+            # operations must be performed in the request handler task.
+            # Therefore, instead of calling asyncio.create_task(), the reader
+            # is awaited in the current task. The reader exits when the
+            # connection is closed.
             await self._aloop_reader()
             self._logger.debug("run_loop(): ws_closed")
         except Exception as e:  # pylint: disable=broad-exception-caught
